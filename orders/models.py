@@ -1,11 +1,11 @@
 from django.db import models
 
 # Create your models here.
-class Pizza(models.Model):
-    name = models.CharField(max_length=32)
-    priceSmall = models.FloatField()
-    priceLarge = models.FloatField()
-
 class Topping(models.Model):
     name = models.CharField(max_length=32)
-    pizzas = models.ManyToManyField(Pizza, blank=True, related_name="toppings")
+
+class Dish(models.Model):
+    name = models.CharField(max_length=32)
+    dishType = models.CharField(max_length=32)
+    prizeSmall = models.FloatField(max_length=8, blank=True, null=True)
+    prizeLarge = models.FloatField(max_length=8, blank=True, null=True)
