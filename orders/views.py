@@ -23,3 +23,6 @@ def index(request):
     print("type: ")
     print(type(subs))
     return render(request, "orders/index.html", menu)
+
+def cart(request):
+    return render(request, "orders/cart.html")

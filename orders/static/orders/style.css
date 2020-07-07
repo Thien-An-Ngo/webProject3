@@ -1,0 +1,11 @@
+.bg-red-nav {
+  background-color: red
+}
+
+.text-tabs-white {
+  color: white
+}
+
+.text-tabs-white:hover {
+  color: green
+}
