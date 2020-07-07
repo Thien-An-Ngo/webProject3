@@ -195,7 +195,7 @@
               <label class="input-group-text" for="secondTop">Second Item</label>
             </div>
             <select class="custom-select pizzaTops" id="secondTop" disabled>
-              <option value="noValue"></option>
+              <option value="noValue">Choose...</option>
               {% for topping in toppings %}
                 <option value="{{topping.id}}">{{topping.name}}</option>
               {% endfor %}
@@ -206,7 +206,7 @@
               <label class="input-group-text" for="thirdTop">Third Item</label>
             </div>
             <select class="custom-select pizzaTops" id="thirdTop" disabled>
-              <option value="noValue"></option>
+              <option value="noValue">Choose...</option>
               {% for topping in toppings %}
                 <option value="{{topping.id}}">{{topping.name}}</option>
               {% endfor %}

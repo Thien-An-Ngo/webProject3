@@ -13,7 +13,7 @@
   <body>
     <div style="background-color:green; height:100%; min-height: 100vh;">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-sm navbar-light bg-red-nav fixed-top">
+      <nav class="navbar navbar-expand-sm navbar-light bg-red-nav fixed-top" id="navbar">
         <a class="navbar-brand text-white" href="#">Pizza</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -40,9 +40,9 @@
       {% block body %}
       {% endblock %}
     </div>
-      <script type="text/javascript" src="{% static 'orders/index.js' %}"></script>
-      <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/jquery/jquery-3.4.1.slim.min.js' %}"></script>
-      <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/popper/popper.min.js' %}"></script>
-      <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/bootstrap/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'orders/index.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/jquery/jquery-3.4.1.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/popper/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-4.5.0-dist/js/bootstrap/bootstrap.min.js' %}"></script>
   </body>
 </html>
