@@ -22,63 +22,65 @@ document.addEventListener('DOMContentLoaded', () => {
   thirdTop = document.querySelector('#thirdTop'),
   noValue = "Choose...";;
 
-  firstTop.onchange = () => {
-    console.log("firstHurz");
-    if (firstTop.value !== "noValue") {
-      secondTop.removeAttribute('disabled')
-    };
-
-    if (firstTop.value === "noValue") {
-      secondTop.setAttribute("disabled", "");
-      let secondOpts = secondTop.options;
-      for (let opt, j = 0; opt = secondOpts[j]; j++) {
-        if (opt.value == noValue) {
-          secondTop.selectedIndex = j;
-          break;
-        }
+  if (firstTop) {
+    firstTop.onchange = () => {
+      console.log("firstHurz");
+      if (firstTop.value !== "noValue") {
+        secondTop.removeAttribute('disabled')
       };
-      thirdTop.setAttribute("disabled", "");
-      let thirdOpts = thirdTop.options;
-      for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-        if (opt.value == noValue) {
-          thirdTop.selectedIndex = j;
-          break;
+
+      if (firstTop.value === "noValue") {
+        secondTop.setAttribute("disabled", "");
+        let secondOpts = secondTop.options;
+        for (let opt, j = 0; opt = secondOpts[j]; j++) {
+          if (opt.value == noValue) {
+            secondTop.selectedIndex = j;
+            break;
+          }
+        };
+        thirdTop.setAttribute("disabled", "");
+        let thirdOpts = thirdTop.options;
+        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
+          if (opt.value == noValue) {
+            thirdTop.selectedIndex = j;
+            break;
+          }
         }
       }
-    }
-  };
-
-  secondTop.onchange = () => {
-    if (firstTop.value !== "noValue" && secondTop.value !== "noValue") {
-      thirdTop.removeAttribute('disabled')
     };
 
-    if (firstTop.value === "noValue") {
-      secondTop.setAttribute("disabled", "");
-      let secondOpts = secondTop.options;
-      for (let opt, j = 0; opt = secondOpts[j]; j++) {
-        if (opt.value == noValue) {
-          secondTop.selectedIndex = j;
-          break;
-        }
+    secondTop.onchange = () => {
+      if (firstTop.value !== "noValue" && secondTop.value !== "noValue") {
+        thirdTop.removeAttribute('disabled')
       };
-      thirdTop.setAttribute("disabled", "");
-      let thirdOpts = thirdTop.options;
-      for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-        if (opt.value == noValue) {
-          thirdTop.selectedIndex = j;
-          break;
+
+      if (firstTop.value === "noValue") {
+        secondTop.setAttribute("disabled", "");
+        let secondOpts = secondTop.options;
+        for (let opt, j = 0; opt = secondOpts[j]; j++) {
+          if (opt.value == noValue) {
+            secondTop.selectedIndex = j;
+            break;
+          }
+        };
+        thirdTop.setAttribute("disabled", "");
+        let thirdOpts = thirdTop.options;
+        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
+          if (opt.value == noValue) {
+            thirdTop.selectedIndex = j;
+            break;
+          }
         }
       }
-    }
 
-    if (secondTop.value === "noValue") {
-      thirdTop.setAttribute("disabled", "");
-      let thirdOpts = thirdTop.options;
-      for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-        if (opt.value == noValue) {
-          thirdTop.selectedIndex = j;
-          break;
+      if (secondTop.value === "noValue") {
+        thirdTop.setAttribute("disabled", "");
+        let thirdOpts = thirdTop.options;
+        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
+          if (opt.value == noValue) {
+            thirdTop.selectedIndex = j;
+            break;
+          }
         }
       }
     }
