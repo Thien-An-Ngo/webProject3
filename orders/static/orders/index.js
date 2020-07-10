@@ -4,6 +4,17 @@ var formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
+function selOpt(sel) {
+  let selOpts = sel.options;
+  for (let j = 0; j < selOpts.length; j++) {
+    let opt = selOpts[j];
+    if (opt.value === "noValue") {
+      sel.selectedIndex = j;
+      break;
+    }
+  }
+}
+
 // Use it.
 var values = document.querySelectorAll('.value'),
 prices = document.querySelectorAll('.price')
@@ -17,11 +28,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const firstTop = document.querySelector('#firstTop'),
+  const orderReg = document.querySelector('#orderRegular'),
+  orderSic = document.querySelector('#orderSicilian')
+  pizza = document.querySelectorAll('.pizza'),
+  firstTop = document.querySelector('#firstTop'),
   secondTop = document.querySelector('#secondTop'),
   thirdTop = document.querySelector('#thirdTop'),
-  noValue = "Choose...";;
+  noValue = "Choose...";
 
+  pizza.forEach(link => {
+    link.onclick = () => {
+      document.querySelector('#pizzaModalLabel').innerHTML = link.dataset.pizza;
+      document.querySelector('#pizzaType').value = link.dataset.pizza;
+      selOpt(firstTop);
+      selOpt(secondTop);
+      selOpt(thirdTop);
+      if (!secondTop.hasAttribute("disabled")) {
+        secondTop.setAttribute("disabled", "");
+      }
+      if (!thirdTop.hasAttribute("disabled")) {
+        thirdTop.setAttribute("disabled", "");
+      }
+    }
+  })
+
+  // Change Toppings on Reset
   if (firstTop) {
     firstTop.onchange = () => {
       console.log("firstHurz");
@@ -31,21 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (firstTop.value === "noValue") {
         secondTop.setAttribute("disabled", "");
-        let secondOpts = secondTop.options;
-        for (let opt, j = 0; opt = secondOpts[j]; j++) {
-          if (opt.value == noValue) {
-            secondTop.selectedIndex = j;
-            break;
-          }
-        };
+        selOpt(secondTop);
         thirdTop.setAttribute("disabled", "");
-        let thirdOpts = thirdTop.options;
-        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-          if (opt.value == noValue) {
-            thirdTop.selectedIndex = j;
-            break;
-          }
-        }
+        selOpt(thirdTop)
       }
     };
 
@@ -56,33 +75,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (firstTop.value === "noValue") {
         secondTop.setAttribute("disabled", "");
-        let secondOpts = secondTop.options;
-        for (let opt, j = 0; opt = secondOpts[j]; j++) {
-          if (opt.value == noValue) {
-            secondTop.selectedIndex = j;
-            break;
-          }
-        };
+        selOpt(secondTop);
         thirdTop.setAttribute("disabled", "");
-        let thirdOpts = thirdTop.options;
-        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-          if (opt.value == noValue) {
-            thirdTop.selectedIndex = j;
-            break;
-          }
-        }
+        selOpt(thirdTop)
       }
 
       if (secondTop.value === "noValue") {
         thirdTop.setAttribute("disabled", "");
-        let thirdOpts = thirdTop.options;
-        for (let opt, j = 0; opt = thirdOpts[j]; j++) {
-          if (opt.value == noValue) {
-            thirdTop.selectedIndex = j;
-            break;
-          }
-        }
+        selOpt(secondTop)
       }
     }
-  }
+  };
+
+  const orderLinks = document.querySelectorAll('.price'),
+  extraCheese = document.querySelector('#extraCheeseSub');
+
+  orderLinks.forEach(link => {
+    link.onclick = () => {
+      document.querySelector('#menuModalLabel').innerHTML = link.dataset.order;
+      document.querySelector('#dishPrice').value = link.dataset.price;
+      document.querySelector('#menuPriceLabel').innerHTML = formatter.format(link.dataset.price);
+      if (link.dataset.dish === "sub") {
+        extraCheese.classList.remove("fade")
+      }
+      else if (extraCheese.classList.contains('fade')) {
+        
+      }
+      else {
+        extraCheese.classList.add("fade")
+      }
+    }
+  })
 })

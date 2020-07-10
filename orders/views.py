@@ -10,19 +10,24 @@ def index(request):
     salads = Dish.objects.filter(dishType="Salad")
     dinnerPlatters = Dish.objects.filter(dishType="Dinner Platter")
     hurzel = "Hallöchen"
-    menu = {
-        "hurzel":"Hallöchen",
-        "toppings": Topping.objects.all(),
-        "subs": subs,
-        "pastas": pastas,
-        "salads": salads,
-        "dinnerPlatters": dinnerPlatters
+    content = {
+        "menu": {
+            "hurzel": hurzel,
+            "toppings": Topping.objects.all(),
+            "subs": subs,
+            "pastas": pastas,
+            "salads": salads,
+            "dinnerPlatters": dinnerPlatters
+        }
     }
-    print(f"subs: {subs}")
-    print(f"menu: {menu}")
-    print("type: ")
-    print(type(subs))
-    return render(request, "orders/index.html", menu)
+    # print(f"subs: {subs}")
+    # print(f"menu: {menu}")
+    # print("type: ")
+    # print(type(subs))
+    return render(request, "orders/index.html", content)
 
 def cart(request):
+    user = {
+        "name": request.user
+    }
     return render(request, "orders/cart.html")

@@ -6,6 +6,8 @@
 
 {% block body %}
   {% if user.is_authenticated %}
+  <input type="hidden" name="pageName" id="pageName" value="menu">
+  <input type="hidden" name="currentUser" id="currentUser" value="{{ user.username }}">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-sm navbar-light bg-red-nav fixed-top" id="navbar">
     <a class="navbar-brand text-white" href="#" style="margin-bottom: 4px">Pizza</a>
@@ -69,13 +71,13 @@
                     <tr>
                       <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Regular Pizza</h3></td>
                       <td class="col-4" style="width: 33.333333%">
-                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-type="Regular Pizza" data-toggle="modal" data-target="#pizzaModal">Order Regular Pizza</a>
+                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-pizza="Regular Pizza" data-toggle="modal" data-target="#pizzaModal">Order Regular Pizza</a>
                       </td>
                     </tr>
                     <tr>
                       <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Sicilian Pizza</h3></td>
                       <td class="col-4" style="width: 33.333333%">
-                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-type="Sicilian Pizza" data-toggle="modal" data-target="#pizzaModal">Order Sicilian Pizza</a>
+                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-pizza="Sicilian Pizza" data-toggle="modal" data-target="#pizzaModal">Order Sicilian Pizza</a>
                       </td>
                     </tr>
                   </tbody>
@@ -93,13 +95,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for sub in subs %}
-                      <tr id="{{sub.id}}">
+                    {% for sub in menu.subs %}
+                      <tr id="Sub no{{sub.id}}">
                         <td class="col-8 text-left">{{sub.name}}</td>
                         <input type="hidden" class="value" value="{{sub.prizeSmall}}">
                         <input type="hidden" class="value" value="{{sub.prizeLarge}}">
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
+                        <td class="col-2">
+                          <a href="" class="btn text-white price bgrh" data-dish="sub" data-order="Small {{sub.name}} Sub" data-price="{{sub.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a>
+                        </td>
+                        <td class="col-2">
+                          <a href="" class="btn text-white price bgrh" data-dish="sub" data-order="Large {{sub.name}} Sub" data-price="{{sub.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a>
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -116,11 +122,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for pasta in pastas %}
-                      <tr id="{{pasta.id}}">
+                    {% for pasta in menu.pastas %}
+                      <tr id="Pasta no{{pasta.id}}">
                         <td class="col-8 text-left">{{pasta.name}}</td>
                         <input type="hidden" class="value" value="{{pasta.prizeSmall}}">
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="Pasta {{pasta.name}}" data-price="{{pasta.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -137,11 +143,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for salad in salads %}
-                      <tr id="{{salad.id}}">
+                    {% for salad in menu.salads %}
+                      <tr id="Salad no{{salad.id}}">
                         <td class="col-8 text-left">{{salad.name}}</td>
                         <input type="hidden" class="value" value="{{salad.prizeSmall}}">
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{salad.name}} Salad" data-price="{{salad.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -159,13 +165,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for platter in dinnerPlatters %}
-                      <tr id="{{platter.id}}">
+                    {% for platter in menu.dinnerPlatters %}
+                      <tr id="Platter no{{platter.id}}">
                         <td class="col-8 text-left">{{platter.name}}</td>
                         <input type="hidden" class="value" value="{{platter.prizeSmall}}">
                         <input type="hidden" class="value" value="{{platter.prizeLarge}}">
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
-                        <td class="col-2"><a href="" class="btn text-white price" style="background-color:red;"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{platter.name}} Small" data-price="{{platter.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{platter.name}} Large" data-price="{{platter.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -181,71 +187,101 @@
     </div>
   </div>
   <!-- Main Body end -->
-</div>
 
-<!-- Modals and Templates -->
-<!-- Modals -->
-<div class="modal fade" id="pizzaModal" tabindex="-1" role="dialog" aria-labelledby="pizzaModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="pizzaModalLabel"></h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <!-- Modals and Templates -->
+  <!-- Modals -->
+  <div class="modal fade" id="pizzaModal" tabindex="-1" role="dialog" aria-labelledby="pizzaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="pizzaModalLabel"></h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Pizza Form -->
+          <form>
+            <input type="hidden" name="pizzaType" id="pizzaType" value="">
+            <div class="row ml-3">
+              <div class="form-group form-check col-6">
+                <input type="radio" class="form-check-input" name="sizeReg" id="small" value="small" checked>
+                <label class="form-check-label" for="small">Small</label>
+              </div>
+              <div class="form-group form-check col-6">
+                <input type="radio" class="form-check-input" name="sizeReg" id="large" value="large">
+                <label class="form-check-label" for="large">Large</label>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="firstTop">First Item</label>
+              </div>
+              <select class="custom-select pizzaTops" id="firstTop">
+                <option value="noValue">Cheese Only</option>
+                {% for topping in menu.toppings %}
+                  <option value="{{topping.id}}">{{topping.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="secondTop">Second Item</label>
+              </div>
+              <select class="custom-select pizzaTops" id="secondTop" disabled>
+                <option value="noValue">Choose...</option>
+                {% for topping in menu.toppings %}
+                  <option value="{{topping.id}}">{{topping.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="thirdTop">Third Item</label>
+              </div>
+              <select class="custom-select pizzaTops" id="thirdTop" disabled>
+                <option value="noValue">Choose...</option>
+                {% for topping in menu.toppings %}
+                  <option value="{{topping.id}}">{{topping.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer row justify-content-between mx-2">
+          <button type="button" class="btn btn-outline-danger" id="closePizzaModal" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Order</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <!-- Pizza Form -->
-        <form>
-          <input type="hidden" id="pizzaType" value="">
-          <div class="row ml-3">
-            <div class="form-group form-check col-6">
-              <input type="radio" class="form-check-input" name="sizeReg" id="small" value="small" checked>
-              <label class="form-check-label" for="small">Small</label>
-            </div>
-            <div class="form-group form-check col-6">
-              <input type="radio" class="form-check-input" name="sizeReg" id="large" value="large">
-              <label class="form-check-label" for="large">Large</label>
-            </div>
+    </div>
+  </div>
+  <!-- Pizza Modal end -->
+  <!-- Menu Modal -->
+  <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menuModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3 id="menuPriceLabel" class="my-3 mt-3"></h3>
+          <div class="fade" id="extraCheeseSub">
+            <form>
+              <input type="hidden" name="dishPrice" id="dishPrice" value="">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="extraCheese">
+                <label class="custom-control-label" for="extraCheese">Extra Cheese (+ $0.50)</label>
+              </div>
+            </form>
           </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="firstTop">First Item</label>
-            </div>
-            <select class="custom-select pizzaTops" id="firstTop">
-              <option value="noValue">Choose...</option>
-              {% for topping in toppings %}
-                <option value="{{topping.id}}">{{topping.name}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="secondTop">Second Item</label>
-            </div>
-            <select class="custom-select pizzaTops" id="secondTop" disabled>
-              <option value="noValue">Choose...</option>
-              {% for topping in toppings %}
-                <option value="{{topping.id}}">{{topping.name}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="thirdTop">Third Item</label>
-            </div>
-            <select class="custom-select pizzaTops" id="thirdTop" disabled>
-              <option value="noValue">Choose...</option>
-              {% for topping in toppings %}
-                <option value="{{topping.id}}">{{topping.name}}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer row justify-content-between mx-2">
-        <button type="button" class="btn btn-outline-danger" id="closePizzaModal" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Order</button>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-secondary ml-3" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary mr-3">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
