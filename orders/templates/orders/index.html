@@ -71,13 +71,13 @@
                     <tr>
                       <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Regular Pizza</h3></td>
                       <td class="col-4" style="width: 33.333333%">
-                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-pizza="Regular Pizza" data-toggle="modal" data-target="#pizzaModal">Order Regular Pizza</a>
+                        <a class="btn text-white bg-red bgrh btn-block pizza btn-order" type="button" data-pizza="Regular Pizza" data-toggle="modal" data-target="#pizzaModal">Order Regular Pizza</a>
                       </td>
                     </tr>
                     <tr>
                       <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Sicilian Pizza</h3></td>
                       <td class="col-4" style="width: 33.333333%">
-                        <a class="btn text-white bg-red bgrh btn-block pizza" type="button" data-pizza="Sicilian Pizza" data-toggle="modal" data-target="#pizzaModal">Order Sicilian Pizza</a>
+                        <a class="btn text-white bg-red bgrh btn-block pizza btn-order" type="button" data-pizza="Sicilian Pizza" data-toggle="modal" data-target="#pizzaModal">Order Sicilian Pizza</a>
                       </td>
                     </tr>
                   </tbody>
@@ -101,10 +101,10 @@
                         <input type="hidden" class="value" value="{{sub.prizeSmall}}">
                         <input type="hidden" class="value" value="{{sub.prizeLarge}}">
                         <td class="col-2">
-                          <a href="" class="btn text-white price bgrh" data-dish="sub" data-order="Small {{sub.name}} Sub" data-price="{{sub.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a>
+                          <a href="" class="btn text-white price bgrh btn-order" data-dish="sub" data-order="Small {{sub.name}} Sub" data-price="{{sub.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a>
                         </td>
                         <td class="col-2">
-                          <a href="" class="btn text-white price bgrh" data-dish="sub" data-order="Large {{sub.name}} Sub" data-price="{{sub.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a>
+                          <a href="" class="btn text-white price bgrh btn-order" data-dish="sub" data-order="Large {{sub.name}} Sub" data-price="{{sub.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a>
                         </td>
                       </tr>
                     {% endfor %}
@@ -126,7 +126,7 @@
                       <tr id="Pasta no{{pasta.id}}">
                         <td class="col-8 text-left">{{pasta.name}}</td>
                         <input type="hidden" class="value" value="{{pasta.prizeSmall}}">
-                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="Pasta {{pasta.name}}" data-price="{{pasta.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-order="Pasta {{pasta.name}}" data-price="{{pasta.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -147,7 +147,7 @@
                       <tr id="Salad no{{salad.id}}">
                         <td class="col-8 text-left">{{salad.name}}</td>
                         <input type="hidden" class="value" value="{{salad.prizeSmall}}">
-                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{salad.name}} Salad" data-price="{{salad.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-order="{{salad.name}} Salad" data-price="{{salad.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -170,8 +170,8 @@
                         <td class="col-8 text-left">{{platter.name}}</td>
                         <input type="hidden" class="value" value="{{platter.prizeSmall}}">
                         <input type="hidden" class="value" value="{{platter.prizeLarge}}">
-                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{platter.name}} Small" data-price="{{platter.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
-                        <td class="col-2"><a href="" class="btn text-white price bgrh" data-order="{{platter.name}} Large" data-price="{{platter.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-order="{{platter.name}} Small" data-price="{{platter.prizeSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
+                        <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-order="{{platter.name}} Large" data-price="{{platter.prizeLarge}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -206,11 +206,11 @@
             <div class="row ml-3">
               <div class="form-group form-check col-6">
                 <input type="radio" class="form-check-input" name="sizeReg" id="small" value="small" checked>
-                <label class="form-check-label" for="small">Small</label>
+                <label class="form-check-label font-weight-bold" for="small">Small</label>
               </div>
               <div class="form-group form-check col-6">
                 <input type="radio" class="form-check-input" name="sizeReg" id="large" value="large">
-                <label class="form-check-label" for="large">Large</label>
+                <label class="form-check-label font-weight-bold" for="large">Large</label>
               </div>
             </div>
             <div class="input-group mb-3">
@@ -249,8 +249,8 @@
           </form>
         </div>
         <div class="modal-footer row justify-content-between mx-2">
-          <button type="button" class="btn btn-outline-danger" id="closePizzaModal" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Order</button>
+          <button type="button" class="btn btn-outline-secondary" id="closePizzaModal" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -279,8 +279,8 @@
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-secondary ml-3" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary mr-3">Save changes</button>
+          <button type="button" class="btn btn-outline-secondary ml-2" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary mr-2">Add to Cart</button>
         </div>
       </div>
     </div>
