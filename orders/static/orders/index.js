@@ -88,7 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const orderLinks = document.querySelectorAll('.price'),
-  extraCheese = document.querySelector('#extraCheeseSub');
+  menuOrderForm = document.querySelector('#menuOrderForm'),
+  menuToCart = document.querySelector('#menuAddToCart')
+  ;
 
   orderLinks.forEach(link => {
     link.onclick = () => {
@@ -96,13 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#dishPrice').value = link.dataset.price;
       document.querySelector('#menuPriceLabel').innerHTML = formatter.format(link.dataset.price);
       if (link.dataset.dish === "sub") {
-        extraCheese.classList.remove("fade")
+        menuOrderForm.classList.add("show")
       }
-      else if (extraCheese.classList.contains('fade')) {
-        
-      }
-      else {
-        extraCheese.classList.add("fade")
+      else if (link.dataset.dish !== "sub" && extraCheese.classList.contains("show")) {
+        menuOrderForm.classList.remove("show")
       }
     }
   })
