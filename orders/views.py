@@ -27,7 +27,15 @@ def index(request):
     return render(request, "orders/index.html", content)
 
 def cart(request):
-    user = {
-        "name": request.user
-    }
-    return render(request, "orders/cart.html")
+    if request.method == "GET":
+        return render(request, "orders/cart.html")
+
+def addToCart(request, dish):
+    try:
+        if dish == 0:
+
+        elif dish == 1:
+            
+    except Exception as e:
+        raise
+    return

@@ -224,7 +224,8 @@
         </div>
         <div class="modal-body">
           <!-- Pizza Form -->
-          <form>
+          <form action="{% url 'addToCart' 0 %}" method="POST">
+            {% csrf_token %}
             <input type="hidden" name="pizzaType" id="pizzaType" value="">
             <div class="row ml-3">
               <div class="form-group form-check col-6">
@@ -291,7 +292,7 @@
         </div>
         <div class="modal-body">
           <h3 id="menuPriceLabel" class="my-3 mt-3"></h3>
-          <form id="menuOrderForm" class="collapse" method="POST" action="{% url 'cart' %}">
+          <form id="menuOrderForm" class="collapse" method="POST" action="{% url 'addToCart' 1 %}">
             <input type="hidden" name="dishPrice" id="dishPrice" value="">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="extraCheese" name="extraCheese">
