@@ -229,11 +229,11 @@
             <input type="hidden" name="pizzaType" id="pizzaType" value="">
             <div class="row ml-3">
               <div class="form-group form-check col-6">
-                <input type="radio" class="form-check-input" name="sizeReg" id="small" value="small" checked>
+                <input type="radio" class="form-check-input pizzaSize" name="pizzaSize" id="small" value="small" checked>
                 <label class="form-check-label font-weight-bold" for="small">Small</label>
               </div>
               <div class="form-group form-check col-6">
-                <input type="radio" class="form-check-input" name="sizeReg" id="large" value="large">
+                <input type="radio" class="form-check-input pizzaSize" name="pizzaSize" id="large" value="large">
                 <label class="form-check-label font-weight-bold" for="large">Large</label>
               </div>
             </div>
@@ -241,7 +241,7 @@
               <div class="input-group-prepend">
                 <label class="input-group-text" for="firstTop">First Item</label>
               </div>
-              <select class="custom-select pizzaTops" id="firstTop">
+              <select class="custom-select pizzaTops" id="firstTop" name="firstTop">
                 <option value="noValue">Cheese Only</option>
                 {% for topping in menu.toppings %}
                   <option value="{{topping.id}}">{{topping.name}}</option>
@@ -252,7 +252,7 @@
               <div class="input-group-prepend">
                 <label class="input-group-text" for="secondTop">Second Item</label>
               </div>
-              <select class="custom-select pizzaTops" id="secondTop" disabled>
+              <select class="custom-select pizzaTops" id="secondTop" name="secondTop" disabled>
                 <option value="noValue">Choose...</option>
                 {% for topping in menu.toppings %}
                   <option value="{{topping.id}}">{{topping.name}}</option>
@@ -263,7 +263,7 @@
               <div class="input-group-prepend">
                 <label class="input-group-text" for="thirdTop">Third Item</label>
               </div>
-              <select class="custom-select pizzaTops" id="thirdTop" disabled>
+              <select class="custom-select pizzaTops" id="thirdTop" name="thirdTop" disabled>
                 <option value="noValue">Choose...</option>
                 {% for topping in menu.toppings %}
                   <option value="{{topping.id}}">{{topping.name}}</option>
@@ -271,6 +271,38 @@
               </select>
             </div>
           </form>
+          <hr class="py-2">
+          <div class="px-4 text-right">
+            <div class="row">
+              <h6 class="text-muted col-6 p-0 text-left">Standart (Cheese Only)</h6>
+              <h5 id="pizzaStandartPrice" class="offset-4"></h5>
+            </div>
+            <div class="mx-2">
+              <div class="row collapse">
+                <h6 class="text-muted col-4 p-0 text-left">first Topping</h6>
+                <div class="offset-6 text-right col3 row">
+                  <h5>+</h5>
+                  <h5 id="pizzaPriceOne">1.00</h5>
+                </div>
+              </div>
+              <div class="row collapse">
+                <h6 class="text-muted col-4 p-0 text-left">second Topping</h6>
+                <div class="offset-6 text-right col3 row">
+                  <h5>+</h5>
+                  <h5 id="pizzaPriceTwo">1.00</h5>
+                </div>
+              </div>
+              <div class="row collapse">
+                <h6 class="text-muted col-4 p-0 text-left">third Topping</h6>
+                <div class="offset-6 text-right col3 row">
+                  <h5>+</h5>
+                  <h5 id="pizzaPriceThree">1.00</h5>
+                </div>
+              </div>
+            </div>
+            <hr class="pt-2 mb-1">
+            <h4 id="pizzaPrice"></h4>
+          </div>
         </div>
         <div class="modal-footer row justify-content-between mx-2">
           <button type="button" class="btn btn-outline-secondary" id="closePizzaModal" data-dismiss="modal">Close</button>
@@ -293,6 +325,7 @@
         <div class="modal-body">
           <h3 id="menuPriceLabel" class="my-3 mt-3"></h3>
           <form id="menuOrderForm" class="collapse" method="POST" action="{% url 'addToCart' 1 %}">
+            <input type="hidden" name="dishType" id="dishType" value="">
             <input type="hidden" name="dishPrice" id="dishPrice" value="">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="extraCheese" name="extraCheese">

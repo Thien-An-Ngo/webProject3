@@ -33,9 +33,18 @@ def cart(request):
 def addToCart(request, dish):
     try:
         if dish == 0:
-
+            pizzaType = request.POST["pizzaType"]
+            size = request.POST["pizzaSize"]
+            firstTop = request.POST["firstTop"]
+            secondTop = request.POST["secondTop"]
+            thirdTop = request.POST["thirdTop"]
+            product = {
+                "dishType": "",
+                "note": "",
+                "price": 0
+            }
         elif dish == 1:
-            
-    except Exception as e:
-        raise
-    return
+            dishType = request.POST["dishType"]
+        return HttpResponseRedirect(reverse("index"))
+    except KeyError:
+        return HttpResponseRedirect(reverse("index"))
