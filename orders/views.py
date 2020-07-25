@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .models import Topping, Dish
+from .models import Topping, Dish, Pizza
 
 # Create your views here.
 def index(request):
@@ -10,6 +10,7 @@ def index(request):
     salads = Dish.objects.filter(dishType="Salad")
     dinnerPlatters = Dish.objects.filter(dishType="Dinner Platter")
     hurzel = "Hallöchen"
+    print(list(Pizza.objects.all()))
     content = {
         "menu": {
             "hurzel": hurzel,
@@ -48,3 +49,7 @@ def addToCart(request, dish):
         return HttpResponseRedirect(reverse("index"))
     except KeyError:
         return HttpResponseRedirect(reverse("index"))
+
+def prices(request):
+    prices = list(Pizza.objects.all())
+    return JSONResponse({'prices': prices})

@@ -18,6 +18,7 @@ class Pizza(models.Model):
     oneTopPrice = models.FloatField(null=False)
     twoTopPrice = models.FloatField(null=False)
     threeTopPrice = models.FloatField(null=False)
+    specialPrice = models.FloatField(null=False)
 
 class Customer(models.Model):
     user_id = models.OneToOneField(User, unique=True, on_delete=models.CASCADE,)
