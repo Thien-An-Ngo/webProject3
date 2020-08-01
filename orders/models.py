@@ -8,8 +8,8 @@ class Topping(models.Model):
 class Dish(models.Model):
     name = models.CharField(max_length=32)
     dishType = models.CharField(max_length=32)
-    prizeSmall = models.FloatField(max_length=8, null=True)
-    prizeLarge = models.FloatField(max_length=8, null=True)
+    priceSmall = models.FloatField(max_length=8, null=True)
+    priceLarge = models.FloatField(max_length=8, null=True)
 
 class Pizza(models.Model):
     pizzaType = models.CharField(max_length=16)
@@ -20,18 +20,16 @@ class Pizza(models.Model):
     threeTopPrice = models.FloatField(null=False)
     specialPrice = models.FloatField(null=False)
 
-class Customer(models.Model):
-    user_id = models.OneToOneField(User, unique=True, on_delete=models.CASCADE,)
-    city = models.CharField(max_length=64)
-    post_code = models.IntegerField()
-    street = models.CharField(max_length=64)
+class Order(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.CASCADE,)
+    city = models.CharField(max_length=64, blank=True)
+    post_code = models.IntegerField(null=True, blank=True)
+    street = models.CharField(max_length=64, blank=True)
+    order_date = models.DateField(null=True, blank=True)
+    completed = models.BooleanField()
 
-class Cart(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order_date = models.DateField(blank=True)
-
-class Product(models.Model):
-    cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    prize = models.FloatField(null=True)
+class Order_Entry(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     dishType = models.CharField(max_length=32)
-    extra_information = models.TextField(blank=True)
+    note = models.TextField(blank=True)
+    price = models.FloatField(null=True)

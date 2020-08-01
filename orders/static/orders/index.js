@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
   orderLinks.forEach(link => {
     link.onclick = () => {
       document.querySelector('#menuModalLabel').innerHTML = link.dataset.order;
-      document.querySelector('#dishType').value = link.dataset.order;
-      document.querySelector('#dishPrice').value = link.dataset.price;
+      document.querySelector('#dishID').value = link.dataset.orderid;
+      document.querySelector('#dishSize').value = link.dataset.size;
       document.querySelector('#menuPriceLabel').innerHTML = formatter.format(link.dataset.price);
       if (link.dataset.dish === "sub") {
         menuOrderForm.classList.add("show")
       }
-      else if (link.dataset.dish !== "sub" && extraCheese.classList.contains("show")) {
+      else if (link.dataset.dish !== "sub" && menuOrderForm.classList.contains("show")) {
         menuOrderForm.classList.remove("show")
       }
     }

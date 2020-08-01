@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <title>Register as Customer</title>
+{% endblock %}
+
+{% block body %}
+  <div style="background-color:green;height:7.5vh"></div>
+  <div class="card bg-light mx-3">
+    <div class="card-header">Header</div>
+    <div class="card-body">
+      {% if user.is_authenticated %}
+        <h5 class="card-title">Please put in your address to order something</h5>
+        <form action="{% url 'newCustomer' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="cityInput">City</label>
+              <input type="text" class="form-control" id="cityInput" name="cityInput" required>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="postCodeInput">Post Code</label>
+              <input type="text" class="form-control" id="postCodeInput" name="postCodeInput" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="streetInput">Street</label>
+              <input type="text" class="form-control" id="streetInput" name="streetInput" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="termsInput" required>
+              <label class="form-check-label" for="invalidCheck2">
+                Agree to terms and conditions
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </form>
+      {% else %}
+        <div class="alert alert-danger" role="alert">
+          You are not logged in.
+        </div>
+        <a href="{% url 'login' %}" class="btn btn-secondary">Go to Log In</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
