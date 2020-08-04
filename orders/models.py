@@ -25,8 +25,9 @@ class Order(models.Model):
     city = models.CharField(max_length=64, blank=True)
     post_code = models.IntegerField(null=True, blank=True)
     street = models.CharField(max_length=64, blank=True)
-    order_date = models.DateField(null=True, blank=True)
+    order_datetime = models.DateTimeField(null=True, blank=True)
     completed = models.BooleanField()
+    is_sent = models.BooleanField()
 
 class Order_Entry(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

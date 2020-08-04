@@ -1,0 +1,23 @@
+.green1 {
+  color: #28B463
+}
+
+.red {
+  color: red
+}
+
+.red:hover {
+  color: #DD0000
+}
+
+.green2 {
+  color: #239B56
+}
+
+.p075 {
+  padding: 0.75rem !important
+}
+
+.p075i {
+  padding: 0.75rem !important
+}

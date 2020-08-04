@@ -92,13 +92,23 @@
                 <table class="table table-borderless mb-0 mt-2">
                   <tbody>
                     <tr>
-                      <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Regular Pizza</h3></td>
+                      <td class="col-6 text-left va-middle" style="width: 50%"><h3>Regular Pizza</h3></td>
+                      <td class="col-2 text-center" style="width: 16.666666%">
+                        {% if menu.open_order %}
+                          ({{menu.regPizzaCount}})
+                        {% endif %}
+                      </td>
                       <td class="col-4" style="width: 33.333333%">
                         <a class="btn text-white bg-red bgrh btn-block pizza btn-order" type="button" data-pizza="Regular Pizza" data-toggle="modal" data-target="#pizzaModal">Order Regular Pizza</a>
                       </td>
                     </tr>
                     <tr>
-                      <td class="col-8 text-left va-middle" style="width: 66.666666%"><h3>Sicilian Pizza</h3></td>
+                      <td class="col-8 text-left va-middle" style="width: 50%"><h3>Sicilian Pizza</h3></td>
+                      <td class="col-2 text-center" style="width: 16.666666%">
+                        {% if menu.open_order %}
+                          ({{menu.sicPizzaCount}})
+                        {% endif %}
+                      </td>
                       <td class="col-4" style="width: 33.333333%">
                         <a class="btn text-white bg-red bgrh btn-block pizza btn-order" type="button" data-pizza="Sicilian Pizza" data-toggle="modal" data-target="#pizzaModal">Order Sicilian Pizza</a>
                       </td>
@@ -131,9 +141,14 @@
                     </tr> -->
                     {% for sub in menu.subs %}
                       <tr id="Sub no{{sub.id}}">
-                        <td class="col-8 text-left">{{sub.name}}</td>
+                        <td class="col-6 text-left">{{sub.name}}</td>
                         <input type="hidden" class="value" value="{{sub.priceSmall}}">
                         <input type="hidden" class="value" value="{{sub.priceLarge}}">
+                        <!-- <td class="col-2 text-center">
+                          {% if menu.open_order %}
+                            ({{menu.subCount}})
+                          {% endif %}
+                        </td> -->
                         <td class="col-2">
                           <a href="" class="btn text-white price bgrh btn-order" data-dish="sub" data-orderID="{{sub.id}}" data-size="small" data-order="Small {{sub.name}} Sub" data-price="{{sub.priceSmall}}" data-toggle="modal" data-target="#menuModal"></a>
                         </td>
@@ -164,6 +179,11 @@
                     {% for pasta in menu.pastas %}
                       <tr id="Pasta no{{pasta.id}}">
                         <td class="col-8 text-left">{{pasta.name}}</td>
+                        <!-- <td class="col-2 text-center">
+                          {% if menu.open_order %}
+                            ({{menu.pastaCount}})
+                          {% endif %}
+                        </td> -->
                         <input type="hidden" class="value" value="{{pasta.priceSmall}}">
                         <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-dish="pasta" data-orderID="{{pasta.id}}" data-size="small" data-order="Pasta {{pasta.name}}" data-price="{{pasta.priceSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
@@ -185,6 +205,11 @@
                     {% for salad in menu.salads %}
                       <tr id="Salad no{{salad.id}}">
                         <td class="col-8 text-left">{{salad.name}}</td>
+                        <!-- <td class="col-2 text-center">
+                          {% if menu.open_order %}
+                            ({{menu.saladCount}})
+                          {% endif %}
+                        </td> -->
                         <input type="hidden" class="value" value="{{salad.priceSmall}}">
                         <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-dish="salad" data-orderID="{{salad.id}}" data-size="small" data-order="{{salad.name}}" data-price="{{salad.priceSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
                       </tr>
@@ -206,7 +231,12 @@
                   <tbody>
                     {% for platter in menu.dinnerPlatters %}
                       <tr id="Platter no{{platter.id}}">
-                        <td class="col-8 text-left">{{platter.name}}</td>
+                        <td class="col-6 text-left">{{platter.name}}</td>
+                        <!-- <td class="col-2 text-center">
+                          {% if menu.open_order %}
+                            ({{menu.platterCount}})
+                          {% endif %}
+                        </td> -->
                         <input type="hidden" class="value" value="{{platter.priceSmall}}">
                         <input type="hidden" class="value" value="{{platter.priceLarge}}">
                         <td class="col-2"><a href="" class="btn text-white price bgrh btn-order" data-dish="platter" data-orderID="{{platter.id}}" data-size="small" data-order="{{platter.name}} Small" data-price="{{platter.priceSmall}}" data-toggle="modal" data-target="#menuModal"></a></td>
