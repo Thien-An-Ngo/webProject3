@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Topping(models.Model):
     name = models.CharField(max_length=32)
@@ -26,8 +27,13 @@ class Order(models.Model):
     post_code = models.IntegerField(null=True, blank=True)
     street = models.CharField(max_length=64, blank=True)
     order_datetime = models.DateTimeField(null=True, blank=True)
-    completed = models.BooleanField()
-    is_sent = models.BooleanField()
+    class Status(models.TextChoices):
+        PENDING = 'PD', _('Pending')
+        IN_PROGRESS = 'IP', _('In Progress')
+        DELIVERING = 'DL', _('Delivering')
+        RECEIVED = 'RC', _('Received')
+
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.PENDING)
 
 class Order_Entry(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

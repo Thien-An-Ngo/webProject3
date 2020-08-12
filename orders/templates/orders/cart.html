@@ -5,62 +5,11 @@
 {% endblock %}
 
 {% block body %}
-{% if user.is_authenticated %}
-  <input type="hidden" name="pageName" id="pageName" value="cart">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-sm navbar-light bg-red-nav fixed-top shadow" id="navbar">
-    <a class="navbar-brand text-white" href="#" style="margin-bottom: 4px">Pizza</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-2 text-white justify-content-between" style="margin-right: 0px !important; width: 95%;">
-        <li class="nav-item active row ml-2">
-          <a class="nav-link text-white" href="{% url 'index' %}">Menu<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown dropdown-menu-right">
-          <div class="d-flex row text-light dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="p-0 pl-4">
-              <svg class="bi bi-person-circle" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-top: 6px;">
-                  <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-                  <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                  <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-              </svg>
-            </div>
-            <!-- username top right corner -->
-            <h4 class="" style="margin-top: 3px; padding-left: 5px;">{{ user.username }}</h3>
-          </div>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'cart' %}">
-              <div class="row">
-                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-basket3 col-3 p-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M10.243 1.071a.5.5 0 0 1 .686.172l3 5a.5.5 0 1 1-.858.514l-3-5a.5.5 0 0 1 .172-.686zm-4.486 0a.5.5 0 0 0-.686.172l-3 5a.5.5 0 1 0 .858.514l3-5a.5.5 0 0 0-.172-.686z"/>
-                  <path d="M0 6.5A.5.5 0 0 1 .5 6h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zM.81 9c0 .035.004.07.011.105l1.201 5.604A1 1 0 0 0 3 15.5h10a1 1 0 0 0 .978-.79l1.2-5.605A.495.495 0 0 0 15.19 9h-1.011L13 14.5H3L1.821 9H.81z"/>
-                </svg>
-                <p class="col-9">Cart</p>
-              </div>
-            </a>
-            <a class="dropdown-item" href="#"></a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <!-- Navbar end -->
-  <div class="bg-green" style="background-color: green; height: 100%;">
-    <div class="container bg-green pt-4 pb-4" style="height:100%; min-height:110vh;">
-      <div style="height: 57px"></div>
+  {% if user.is_authenticated %}
+    <input type="hidden" name="pageName" id="pageName" value="cart">
+    <div class="bg-green" style="background-color: green; height: 100%;">
+      <div class="container bg-green pt-4 pb-4" style="height:100%; min-height:110vh;">
+        <div style="height: 57px"></div>
         {% if not error %}
           <div class="card border-light mb-3 my-4">
             <div class="card-header">
@@ -97,9 +46,9 @@
                 </tbody>
               </table>
               <div class="row">
-                <div class="col-1 p-0 p075 p075i"></div>
-                <h5 class="col-8 p-0 p075 p075i">Sum</h5>
-                <div class="green2 col-3 p-0 p075 p075i" id="sum"></div>
+                <!-- <div class="col-1 p-0 p075 p075i"></div> -->
+                <h5 class="col-8 offset-1 p075 p075i">Sum</h5>
+                <div class="green2 col-3 p075 p075i" id="sum">{{price}}</div>
               </div>
               <div class="row">
                 <div class="col-9 p-0 p075 p075i"></div>
@@ -112,65 +61,76 @@
             </div>
           </div>
         {% else %}
-          {{error}}
+          <div style="height: 57px"></div>
+          <div class="card bg-light mb-3">
+            <div class="card-header">
+              <h3>Error</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-danger" role="alert">
+                {{error}}
+              </div>
+            </div>
+          </div>
         {% endif %}
-      {% else %}
-      <div class="text-center p-5">
-        <div class="card text-white bg-danger border-dark-red">
-          <div class="card-body">
-            <h5 class="card-title">You are not logged in</h5>
-            <a href="{% url 'login' %}" class="btn btn-primary card-link">Log In</a>
+      </div>
+    </div>
+
+    <!-- Address Modal -->
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please put in your address to order something</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'orderAddress' %}" method="POST" id="orderAddressForm">
+              {% csrf_token %}
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="cityInput">City</label>
+                  <input type="text" class="form-control" id="cityInput" name="cityInput" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label for="postCodeInput">Post Code</label>
+                  <input type="text" class="form-control" id="postCodeInput" name="postCodeInput" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="streetInput">Street</label>
+                  <input type="text" class="form-control" id="streetInput" name="streetInput" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="termsInput" required>
+                  <label class="form-check-label" for="invalidCheck2">
+                    Agree to terms and conditions
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer row justify-content-between mx-3">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="orderAddressForm">Submit</button>
           </div>
         </div>
       </div>
-      {% endif %}
     </div>
-  </div>
-
-  <!-- Address Modal -->
-  <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Please put in your address to order something</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="{% url 'orderAddress' %}" method="POST" id="orderAddressForm">
-            {% csrf_token %}
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="cityInput">City</label>
-                <input type="text" class="form-control" id="cityInput" name="cityInput" required>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="postCodeInput">Post Code</label>
-                <input type="text" class="form-control" id="postCodeInput" name="postCodeInput" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="streetInput">Street</label>
-                <input type="text" class="form-control" id="streetInput" name="streetInput" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="termsInput" required>
-                <label class="form-check-label" for="invalidCheck2">
-                  Agree to terms and conditions
-                </label>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer row justify-content-between mx-3">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" form="orderAddressForm">Submit</button>
+  <!-- if user is not authenticated -->
+  {% else %}
+    <div class="text-center p-5">
+      <div class="card text-white bg-danger border-dark-red">
+        <div class="card-body">
+          <h5 class="card-title">You are not logged in</h5>
+          <a href="{% url 'login' %}" class="btn btn-primary card-link">Log In</a>
         </div>
       </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock %}

@@ -6,5 +6,43 @@
 
 {% block body %}
   <div style="background-color:green;height:7.5vh"></div>
-  
+  <div style="height:17px"></div>
+  {% if user.is_superuser %}
+    {% for order in orders %}
+      <div class="card bg-light mb-3 mx-3">
+        <div class="card-header">
+          <h4>{{order.order.customer}}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table px-3">
+            <thead>
+              <tr class="row">
+                <th scope="col" class="col-4">Dish Type</th>
+                <th scope="col" class="col-5">Note</th>
+                <th scope="col" class="col-3">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in order.entries %}
+                <tr class="row">
+                  <td class="col-4" scope="row">{{entry.dishType}}</td>
+                  <td class="col-5">{{entry.note}}</td>
+                  <td class="col-3">{{entry.price}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Header</div>
+    <div class="card-body">
+      <h5 class="card-title">Light card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+    </div>
+  {% endif %}
 {% endblock %}

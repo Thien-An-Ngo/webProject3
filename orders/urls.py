@@ -4,9 +4,9 @@ from . import views, forms
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("addToCart/<int:dish>", views.addToCart, name="addToCart"),
+    path("add-to-cart/<int:dish>", views.addToCart, name="addToCart"),
     path("cart", views.cart, name="cart"),
-    path("deleteOrderEntry/<int:order_entry_pk>", views.deleteOrderEntry, name="deleteOrderEntry"),
-    path("orderAddress", views.orderAddress, name="orderAddress"),
-    path("ordersPlaced", views.ordersPlaced, name="ordersPlaced")
+    path("delete-order-entry/<int:order_entry_pk>", views.deleteOrderEntry, name="deleteOrderEntry"),
+    path("order-address", views.orderAddress, name="orderAddress"),
+    path("orders-placed", views.ordersPlaced, name="ordersPlaced")
 ]

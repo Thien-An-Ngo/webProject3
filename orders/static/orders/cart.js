@@ -4,14 +4,6 @@ var formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-function calculate(array) {
-  let sum = 0
-  for (let i = 0; i < array.length; i++) {
-    sum = sum + parseInt(array[i].value)
-  }
-  return sum
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const prices = document.querySelectorAll('.prices'),
   hiddenPrices = document.querySelectorAll('.hiddenPrices'),
@@ -21,12 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   deleteTd = document.querySelectorAll('.deleteOrderTd'),
   deleteLink = document.querySelectorAll('.deleteOrderA');
 
-  if (prices && hiddenPrices) {
-    for (let i = 0; i < hiddenPrices.length; i++) {
-      prices[i].innerHTML = formatter.format(hiddenPrices[i].value)
-    };
-    const sum = calculate(hiddenPrices);
-    displaySum.innerHTML = formatter.format(sum)
+  if (displaySum && prices) {
+    displaySum.innerHTML = formatter.format(displaySum.innerHTML)
+    for (let i = 0; i < prices.length; i++) {
+      prices[i].innerHTML = formatter.format(prices[i].innerHTML)      
+    }
   }
 
   if (deleteIDs) {

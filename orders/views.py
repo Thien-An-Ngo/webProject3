@@ -16,7 +16,7 @@ def index(request):
     pastas = Dish.objects.filter(dishType="Pasta")
     salads = Dish.objects.filter(dishType="Salad")
     dinnerPlatters = Dish.objects.filter(dishType="Dinner Platter")
-    current_order = Order.objects.filter(customer=user, completed=False)
+    current_order = Order.objects.filter(customer=user, status='PD')
     if not current_order:
         content = {
             "menu": {
@@ -29,7 +29,7 @@ def index(request):
             }
         }
     else:
-        current_order = Order.objects.get(customer=user, completed=False)
+        current_order = Order.objects.get(customer=user, status='PD')
         regPizzaCount = Order_Entry.objects.filter(order=current_order, dishType="Regular Pizza").count()
         sicPizzaCount = Order_Entry.objects.filter(order=current_order, dishType="Sicilian Pizza").count()
         subCount = Order_Entry.objects.filter(order=current_order, dishType="Sub").count()
@@ -55,17 +55,27 @@ def cart(request):
         cart = {}
         username = request.user
         user = User.objects.get(username=username)
-        current_order = Order.objects.filter(customer=user, completed=False)
+        current_order = Order.objects.filter(customer=user, status='PD')
         if not current_order:
-            cart = {"error": "You haven't ordered anything yet"}
-        else:
-            current_order = Order.objects.get(customer=user, completed=False)
-            orders = Order_Entry.objects.filter(order=current_order).all()
-            orders.reverse()
+            error = {"error": "You haven't ordered anything yet"}
+        current_order = Order.objects.get(customer=user, status='PD')
+        placed_orders = Order.objects.filter(customer=user).exclude(status='PD')
+        orders = Order_Entry.objects.filter(order=current_order).all()
+        orders.reverse()
+        price = 0
+        for order in orders:
+            price = price + order.price
+        if error:
             cart = {
-                'orders': orders
+                'orders': orders,
+                'price': price
+                'error': error
             }
-        print(f"orders: {orders}")
+        else:
+            cart = {
+                'orders': orders,
+                'price': price
+            }
         return render(request, "orders/cart.html", cart)
 
 def deleteOrderEntry(request, order_entry_pk):
@@ -75,7 +85,7 @@ def deleteOrderEntry(request, order_entry_pk):
     if this_order_entry:
         this_order_entry = Order_Entry.objects.get(pk=order_entry_pk)
         this_order = this_order_entry.order
-        current_order = Order.objects.get(customer=user, completed=False)
+        current_order = Order.objects.get(customer=user, status='PD')
         if this_order == current_order:
             Order_Entry.objects.filter(pk=order_entry_pk).delete()
             return HttpResponseRedirect(reverse('cart'))
@@ -90,12 +100,12 @@ def addToCart(request, dish):
         username = request.user
         user = User.objects.get(username=username)
         user_id = user.pk
-        current_order = Order.objects.filter(customer=user, completed=False)
+        current_order = Order.objects.filter(customer=user, status='PD')
         if not current_order:
-            current_order = Order(customer=user, completed=False)
+            current_order = Order(customer=user, status='PD')
             current_order.save()
         else:
-            current_order = Order.objects.get(customer=user, completed=False)
+            current_order = Order.objects.get(customer=user, status='PD')
         if dish == 0:
             pizzaType = request.POST["pizzaType"]
             size = request.POST["pizzaSize"]
@@ -172,9 +182,9 @@ def orderAddress(request):
     city = request.POST["cityInput"]
     post_code = request.POST["postCodeInput"]
     street = request.POST["streetInput"]
-    current_order = Order.objects.filter(customer=user, completed=False)
+    current_order = Order.objects.filter(customer=user, status='PD')
     if current_order:
-        current_order = Order.objects.get(customer=user, completed=False)
+        current_order = Order.objects.get(customer=user, status='PD')
         order_entries = Order_Entry.objects.filter(order=current_order)
         if not order_entries:
             return HttpResponseRedirect(reverse("index"))
@@ -186,13 +196,26 @@ def orderAddress(request):
                 currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M")
                 current_order.order_datetime = currentDatetime
                 current_order.completed = True
+                current_order.is_delivered = False
                 current_order.save()
                 current_order = Order(customer=user, completed=False)
                 current_order.save()
                 return HttpResponseRedirect(reverse("cart"))
             except KeyError:
                 return HttpResponseRedirect(reverse("cart"))
+    return HttpResponseRedirect(reverse("cart"))
 
 def ordersPlaced(request):
-    orders = Order.objects.filter(is_sent=False).order_by('order_datetime')
-    return render(request, "orders/ordersPlaced.html", {'orders': orders})
+    current_orders = Order.objects.filter(status='IP').order_by('order_datetime')
+    orders_entries = []
+    for o in current_orders:
+        order = Order.objects.get(pk=o.id)
+        current_entries = Order_Entry.objects.filter(order=order)
+        print(f"current_entries: {current_entries}")
+        order_entry = {'order': order, 'entries': current_entries}
+        orders_entries.append(order_entry)
+    data = {
+        'orders': orders_entries
+    }
+    print(data)
+    return render(request, "orders/ordersPlaced.html", data)
